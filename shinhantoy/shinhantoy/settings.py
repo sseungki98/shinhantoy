@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'order.apps.OrderConfig',
     'corsheaders',
+    'member.apps.MemberConfig',
 ]
 
 MIDDLEWARE = [
@@ -135,6 +136,18 @@ REST_FRAMEWORK = {
     )
 }
 
+import datetime
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=2),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("JWT",),
+}
+
+AUTH_USER_MODEL = 'member.Member'
+
+AUTHENTICATION_BACKENDS = [
+    'member.auth.MemberAuth',
+]
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -142,3 +155,4 @@ INTERNAL_IPS = [
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
+
