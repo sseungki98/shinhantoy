@@ -1,0 +1,111 @@
+/* @font-face {
+    font-family: "KOTRAHOPE";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GangwonEdu_OTFBoldA";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: "GangwonEdu_OTFBoldA";
+} */
+@import url("https://fonts.googleapis.com/css2?family=Black+And+White+Picture&family=Black+Han+Sans&family=Do+Hyeon&family=Dongle&family=Gothic+A1&family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&family=Stylish&family=Sunflower:wght@500&display=swap");
+
+body {
+    font-family: "Gowun Dodum", sans-serif;
+}
+ul,
+li {
+    text-decoration: none;
+    list-style: none;
+}
+
+.text-end {
+    margin: 0;
+}
+
+.btn-close {
+    width: 30px;
+    height: 30px;
+    border: 1px solid gray !important;
+    border-radius: 50%;
+    padding: 2px;
+    text-align: center;
+    line-height: 15px;
+}
+
+.btn-outline-info {
+    display: inline-block;
+    width: 100px !important;
+    margin-bottom: 0;
+}
+
+input[type="text"],
+input[type="password"] {
+    border: 1px solid #c7c7c7;
+    border-radius: 5px;
+    padding: 8px;
+    width: 100%;
+    height: 35px;
+    margin: 5px 0;
+}
+
+.container {
+    max-width: 800px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    margin: 5px 0;
+}
+
+.btn {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.btn-outline-info {
+    margin: 0;
+}
+
+.login-container {
+    position: absolute;
+    max-width: 500px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+}
+.signup-container {
+    position: absolute;
+    width: 500px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+}
+
+.container {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 30px;
+}
+
+#comment {
+    max-width: 500px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
