@@ -37,3 +37,17 @@ textarea {
     width: 50%;
     margin: 0 auto;
 }
+
+#like-btn {
+    border: none;
+    background: none;
+}
+
+#commentListContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.red {
+    color: red;
+}

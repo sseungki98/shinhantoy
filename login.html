@@ -21,7 +21,7 @@
                     success: (result) => {
                         sessionStorage.setItem("accessToken", result.access);
                         alert("로그인 성공!");
-                        document.location.replace("order_list.html");
+                        document.location.replace("order_list.html?page=1");
                     },
                 });
             }
