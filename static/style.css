@@ -12,7 +12,8 @@ textarea {
 }
 
 #commentWrite {
-    width: 50%;
+    display: flex;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -34,7 +35,8 @@ textarea {
 }
 
 #commentList {
-    width: 50%;
+    width: 90%;
+    padding: 10px;
     margin: 0 auto;
 }
 

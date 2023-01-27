@@ -65,7 +65,7 @@
                         alert("댓글이 삭제되었습니다.");
                         location.reload();
                     },
-                    fail: (result) => {
+                    fail: (result, response) => {
                         alert("본인의 댓글만 삭제할 수 있습니다.");
                     },
                 });
@@ -88,8 +88,8 @@
                         alert("댓글 작성 완료!");
                         document.location.reload();
                     },
-                    fail: (result) => {
-                        console.error(result);
+                    fail: (result, response) => {
+                        console.error(result, response);
                     },
                 });
             }
@@ -132,7 +132,7 @@
                         },
                         success: (result) => {
                             const count = result.count; //14
-                            let pages = count / 10; //1.4
+                            let pages = Math.ceil(count / 10); //1.4
                             for (let i = page - 2; i < page + 3; i++) {
                                 //page = 1
                                 if (pages < 1) {
@@ -141,7 +141,7 @@
                             `);
                                     break;
                                 }
-                                if (i <= 0 || i >= pages + 1) {
+                                if (i <= 0 || i > pages) {
                                     continue;
                                 }
                                 if (i == page) {
@@ -157,7 +157,6 @@
 
                             for (let i = 0; i < result.results.length; i++) {
                                 comment = result.results[i];
-                                console.log(comment);
                                 if (comment.is_like) {
                                     $("#commentList").append(
                                         $(`<li class="list-group-item cmt">
@@ -190,14 +189,14 @@
         <div class="text-center">
             <ul class="list-group list-group-flush" id="orders"></ul>
             <hr />
+            <div id="commentWrite">
+                <textarea id="content" name="content" placeholder="댓글 내용"></textarea>
+                <button class="btn btn-warning" onclick="writeComment()">작성</button>
+            </div>
             <div id="comment">
                 <div id="commentListContainer">
                     <ul id="commentList" class="list-group list-group-flush"></ul>
                     <ul id="pagination" class="pagination mx-auto"></ul>
-                </div>
-                <div id="commentWrite">
-                    <textarea id="content" name="content" placeholder="댓글 내용"></textarea>
-                    <button class="btn btn-warning" onclick="writeComment()">작성</button>
                 </div>
             </div>
         </div>
