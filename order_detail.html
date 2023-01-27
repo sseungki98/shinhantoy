@@ -9,6 +9,26 @@
         <link rel="stylesheet" href="./static/style.css" />
         <title>주문 상세 정보</title>
         <script>
+            function deleteComment(cmt_id, mem_id) {
+                const search = new URLSearchParams(location.search);
+                const order_id = search.get("order_id");
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "http://127.0.0.1:8000/api/order/comment/" + cmt_id,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "JWT " + sessionStorage.getItem("accessToken"));
+                    },
+                    success: (result) => {
+                        alert("댓글이 삭제되었습니다.");
+                        location.reload();
+                    },
+                    fail: (result) => {
+                        alert("본인의 댓글만 삭제할 수 있습니다.");
+                    },
+                });
+            }
+
             function writeComment() {
                 const search = new URLSearchParams(location.search);
                 const order_id = search.get("order_id");
@@ -34,9 +54,10 @@
             $(document).ready(function () {
                 const search = new URLSearchParams(location.search);
                 const order_id = search.get("order_id");
-                $.get("http://127.0.0.1:8000/api/order/" + order_id).then((result) => {
-                    $("#orders").append(
-                        $(`<h1>order_id : ${order_id}</h1>
+                if (order_id > 0) {
+                    $.get("http://127.0.0.1:8000/api/order/" + order_id).then((result) => {
+                        $("#orders").append(
+                            $(`
                             <li class="list-group-item">
                             ord_ymd : ${result.ord_ymd}<br>
                             acct_mang_dbrn_code : ${result.acct_mang_dbrn_code}<br>
@@ -49,21 +70,22 @@
                             ord_uv : ${result.ord_uv}<br>
                             mrgn_base_uv : ${result.mrgn_base_uv}
                             </li>`)
-                    );
-                });
-
-                $.get("http://127.0.0.1:8000/api/order/" + order_id + "/comment").then((result) => {
-                    for (let i = 0; i < result.results.length; i++) {
-                        comment = result.results[i];
-                        $("#commentList").append(
-                            $(`<li class="list-group-item">
-                            작성자: ${comment.member_username}<br>
-                            작성일시: ${comment.tstamp}<br>
-                            ${comment.content}
-                            </li>`)
                         );
-                    }
-                });
+                    });
+
+                    $.get("http://127.0.0.1:8000/api/order/" + order_id + "/comment").then((result) => {
+                        for (let i = 0; i < result.results.length; i++) {
+                            comment = result.results[i];
+                            $("#commentList").append(
+                                $(`<li class="list-group-item cmt">
+                            <div>${comment.content}</div>
+                            <div>작성자: ${comment.member_username} ( ${comment.tstamp} )<button class='delete_btn' onclick="deleteComment(${comment.id},${comment.member})">X</button></div>
+                            
+                            </li>`)
+                            );
+                        }
+                    });
+                }
             });
         </script>
     </head>
@@ -77,7 +99,7 @@
                 </div>
                 <div id="commentWrite">
                     <textarea id="content" name="content" placeholder="댓글 내용"></textarea>
-                    <button class="btn btn-warning" onclick="writeComment()">댓글 작성</button>
+                    <button class="btn btn-warning" onclick="writeComment()">작성</button>
                 </div>
             </div>
         </div>

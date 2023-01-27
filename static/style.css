@@ -8,14 +8,32 @@ a {
 }
 
 textarea {
-    width: 600px;
+    width: 95%;
 }
 
 #commentWrite {
-    display: flex;
-    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
 }
 
 #comment {
     margin-bottom: 100px;
+    text-align: center;
+}
+
+.delete_btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid gray;
+    border-radius: 50%;
+}
+
+.cmt {
+    display: flex;
+    justify-content: space-between;
+}
+
+#commentList {
+    width: 50%;
+    margin: 0 auto;
 }
