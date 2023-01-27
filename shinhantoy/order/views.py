@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics, mixins, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import OrderListSerializer, CommentCreateSerializer, CommentSerializer, CommentDeleteSerializer
-from .models import Order, Comment
+from .serializers import OrderListSerializer, CommentCreateSerializer, CommentSerializer, CommentDeleteSerializer, LikeSerializer
+from .models import Order, Comment, Like
 
 class OrderListView(
     mixins.ListModelMixin,
@@ -71,3 +71,22 @@ class CommentDeleteView(
     def delete(self, request, *args, **kwargs): # 댓글삭제
         return self.destroy(request, args, kwargs)
 
+
+class CreateCommentLikeView(
+    mixins.CreateModelMixin,
+    generics.GenericAPIView
+):
+    
+    serializer_class = LikeSerializer
+
+    def get_queryset(self):
+        return Like.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        comment_id = request.data.get('comment')
+
+        if Like.objects.filter(member=request.user, comment_id=comment_id).exists():
+            Like.objects.filter(member=request.user, comment_id=comment_id).delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return self.create(request, args, kwargs)
