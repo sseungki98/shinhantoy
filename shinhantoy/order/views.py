@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, mixins, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import OrderListSerializer, CommentCreateSerializer, CommentSerializer
+from .serializers import OrderListSerializer, CommentCreateSerializer, CommentSerializer, CommentDeleteSerializer
 from .models import Order, Comment
 
 class OrderListView(
@@ -16,8 +16,7 @@ class OrderListView(
         if order_number:
             orders = Order.objects.filter(ord_no__contains=order_number)
             return orders
-        # if self.request.data.get('order_number'):
-        #     return Order.objects.filter(ord_no=self.request.data.get('order_number'))
+
         return Order.objects.all().order_by('id')
 
     def get(self, request, *args, **kwargs):
@@ -37,7 +36,7 @@ class OrderDetailView(
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, args, kwargs)
 
-class CommentCreateView(
+class CommentView(
     mixins.CreateModelMixin,
     mixins.ListModelMixin,
     generics.GenericAPIView
@@ -49,13 +48,26 @@ class CommentCreateView(
         return CommentSerializer
     
     def get_queryset(self):
-        pk = self.kwargs.get('pk')
-        return Comment.objects.filter(order_id=pk)
+        order_id = self.kwargs.get('order_id')
+        return Comment.objects.filter(order_id=order_id)
 
     def post(self, request, *args, **kwargs):
-        return self.create(request, args, kwargs)
+        return self.create(request, args, kwargs) #댓글작성
 
     def get(self, request, *args, **kwargs):
-        return self.list(request, args, kwargs)
+        return self.list(request, args, kwargs) #댓글보기
         
+class CommentDeleteView(
+    mixins.DestroyModelMixin,
+    generics.GenericAPIView
+):
+
+    serializer_class = CommentDeleteSerializer
+
+    def get_queryset(self):
+        mem_id = self.request.user.id
+        return Comment.objects.filter(member_id=mem_id)
+
+    def delete(self, request, *args, **kwargs): # 댓글삭제
+        return self.destroy(request, args, kwargs)
 
